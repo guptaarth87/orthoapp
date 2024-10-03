@@ -14,7 +14,7 @@ import numpy as np
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app ,resources={r"/*": {"origins": "*"}})  # Enable CORS
 
 # MongoDB client setup
 client = MongoClient('mongodb+srv://arth1234samepass:arth1234@cluster0.pdgx6ns.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')  # Update with your MongoDB URI if needed

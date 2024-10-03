@@ -47,16 +47,19 @@ const Index = () => {
 
         try {
             const response = await axios.post(`${API_URL}/process-image`, formData, {
+               
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
+            console.log(response)
             if (response.data.status === 'success') {
+                console.log(response)
                 setOutputImage(response.data.output_image);
                 setExtraData(preprocessData(response.data.data));
             } else {
-                alert(response.data.message);
+                // alert(response.data.message);
+                alert('issue in fetching')
             }
         } catch (error) {
             alert('An error occurred: ' + error.response.data.message);
@@ -99,7 +102,7 @@ const Index = () => {
                         {outputImage && (
                             <div className="mt-4 text-center">
                                 <h4 className="poppins-medium">Processed Output</h4>
-                                {/* <img src={`data:image/png;base64,${outputImage}`} alt="Output" className="img-fluid shadow-sm" style={{ borderRadius: '10px' }} /> */}
+                                <img src={`data:image/png;base64,${outputImage}`} alt="Output" className="img-fluid shadow-sm" style={{ borderRadius: '10px' }} />
                             </div>
                         )}
                         {extraData && (
