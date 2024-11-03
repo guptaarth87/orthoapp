@@ -47,12 +47,12 @@ const Index = () => {
 
         try {
             const response = await axios.post(`${API_URL}/process-image`, formData, {
-               
+               mode : 'no-cors',
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log(response)
+             console.log(response)
             if (response.data.status === 'success') {
                 console.log(response)
                 setOutputImage(response.data.output_image);

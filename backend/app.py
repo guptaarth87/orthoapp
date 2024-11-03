@@ -85,15 +85,13 @@ def signup():
             print(users_collection.find_one({'email': email}))
             return jsonify({'status': 'fail', 'message': 'User already exists'}), 400
 
-        # Hash the password and store the user
-        hashed_password = generate_password_hash(password, method='sha256')
-        users_collection.insert_one({'name_':name_ ,'phoneNo':phoneNo , 'email': email, 'password': hashed_password})
+        # Store the password directly without hashing
+        users_collection.insert_one({'name_': name_, 'phoneNo': phoneNo, 'email': email, 'password': password})
         return jsonify({'status': 'success', 'message': 'User created successfully'}), 201
 
     except Exception as e:
         return jsonify({'status': 'fail', 'message': str(e)}), 500
 
-# Signin route
 
 @app.route('/signin', methods=['POST'])
 def signin():
@@ -103,14 +101,17 @@ def signin():
         password = data['password']
         print(email)
         print(password)
+
+        # Find the user and check if the password matches (without hash)
         user = users_collection.find_one({'email': email})
-        if user and check_password_hash(user['password'], password):
+        if user and user['password'] == password:
             return jsonify({'status': 'success', 'message': 'Logged in successfully'}), 200
         else:
             return jsonify({'status': 'fail', 'message': 'Invalid email or password'}), 401
 
     except Exception as e:
         return jsonify({'status': 'fail', 'message': str(e)}), 500
+
 
 def process_image(image):
     # Convert the image to grayscale
