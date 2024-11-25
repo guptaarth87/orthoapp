@@ -96,28 +96,39 @@ const Index = () => {
                         </form>
                     </div>
                 </div>
-                <div className="col-lg-5 col-md-5 col-sm-10">
+                <div className="col-lg-7 col-md-5 col-sm-10">
                     <div className="card shadow p-4" style={{ backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
                         <h3 className="text-center poppins-semibold">Output</h3>
-                        {outputImage && (
-                            <div className="mt-4 text-center">
-                                <h4 className="poppins-medium">Processed Output</h4>
-                                <img src={`data:image/png;base64,${outputImage}`} alt="Output" className="img-fluid shadow-sm" style={{ borderRadius: '10px' }} />
-                            </div>
-                        )}
+                        <div className="row">
                         {extraData && (
-                            <div className="mt-4">
+                            <div className="mt-4 row">
+                                <div className="col-lg-5 col-md-6 col-sm-12">
                                 <h4 className="poppins-medium">Additional Data:</h4>
                                 <pre>{JSON.stringify(extraData, null, 2)}</pre>
+                                
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="mt-4">
                                     <AnalysisGraph analysisData={extraData} />
                                 </div>
                                 <br></br>
                                 <br></br>
                             </div>
+                            </div>
                         )}
+                            <div className="col-lg-7 col-md-6 col-sm-12">
+                        {outputImage && (
+                            <div className="mt-4 text-center">
+                                <h4 className="poppins-medium">Processed Output</h4>
+                                <img src={`data:image/png;base64,${outputImage}`} alt="Output" className="img-fluid shadow-sm" style={{ borderRadius: '10px' }} />
+                            </div>
+                        )}
+                        </div>
+                        
+                        
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );

@@ -3,26 +3,30 @@ import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; // Automatically registers necessary chart.js components
 
 const AnalysisGraph = ({ analysisData }) => {
+  // Sort and filter top 3 entities
+  const sortedData = Object.entries(analysisData)
+    .sort(([, a], [, b]) => b - a) // Sort in descending order by value
+    .slice(0, 3); // Take the top 3
+
+  const labels = sortedData.map(([key]) => key); // Extract keys for labels
+  const values = sortedData.map(([, value]) => value); // Extract values for data
+
   // Prepares data for Chart.js
   const data = {
-    labels: Object.keys(analysisData), // X-axis labels (Doubtful, Healthy, etc.)
+    labels, // X-axis labels (Top 3 keys)
     datasets: [
       {
         label: 'Analysis Results (%)',
-        data: Object.values(analysisData), // Data points (0.34, 0.21, etc.)
+        data: values, // Top 3 data points
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)'
+          '#1f77b4', // Dark blue
+          '#ff7f0e', // Dark orange
+          '#2ca02c', // Dark green
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)'
+          '#1f77b4',
+          '#ff7f0e',
+          '#2ca02c',
         ],
         borderWidth: 1, // Border width of the bars
       },
@@ -34,6 +38,7 @@ const AnalysisGraph = ({ analysisData }) => {
     scales: {
       y: {
         beginAtZero: true,
+        max: 100, // Set Y-axis max to 100%
         ticks: {
           callback: (value) => value + '%', // Adds '%' to y-axis labels
         },
@@ -42,7 +47,7 @@ const AnalysisGraph = ({ analysisData }) => {
     plugins: {
       title: {
         display: true,
-        text: 'Analysis Graph',
+        text: 'Top 3 Analysis Results',
         font: {
           size: 18,
         },
@@ -57,7 +62,7 @@ const AnalysisGraph = ({ analysisData }) => {
 
   return (
     <div style={{ width: '80%', margin: '0 auto', height: '400px' }}>
-      <h3 className="text-center mt-4">Analysis Graph</h3>
+      <h3 className="text-center mt-4">Top 3 Analysis Graph</h3>
       <Bar data={data} options={options} />
     </div>
   );
